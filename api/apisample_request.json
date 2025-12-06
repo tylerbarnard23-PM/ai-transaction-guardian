@@ -1,0 +1,29 @@
+{
+  "transaction_id": "TXN555001",
+  "amount": 109.95,
+  "merchant": {
+    "chargeback_rate": 0.08,
+    "fraud_rate": 0.01,
+    "avg_ticket": 70.11,
+    "merchant_risk_level": "LOW"
+  },
+  "cardholder_profile": {
+    "avg_spend": 650,
+    "home_zip": "90210",
+    "distance_from_home": 39.4,
+    "recent_travel": false,
+    "account_age_days": 1280
+  },
+  "velocity_metrics": {
+    "txns_last_1hr": 1,
+    "txns_last_24hr": 2,
+    "txns_last_7d": 6,
+    "avg_amount_last_7d": 95.12
+  },
+  "device_fingerprint": {
+    "device_id": "apple-93k3301",
+    "ip": "10.0.0.2",
+    "user_agent": "Mozilla/5.0 (iPhone)",
+    "geo": "Los Angeles, CA"
+  }
+}
