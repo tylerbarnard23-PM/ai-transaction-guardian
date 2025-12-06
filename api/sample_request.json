@@ -1,0 +1,147 @@
+[
+  {
+    "transaction_id": "TXN100001",
+    "amount": 120.50,
+    "merchant": {
+      "chargeback_rate": 0.02,
+      "fraud_rate": 0.01,
+      "avg_ticket": 60.00,
+      "merchant_risk_level": "LOW"
+    },
+    "cardholder_profile": {
+      "avg_spend": 300,
+      "home_zip": "10001",
+      "distance_from_home": 2.5,
+      "recent_travel": false,
+      "account_age_days": 900
+    },
+    "velocity_metrics": {
+      "txns_last_1hr": 0,
+      "txns_last_24hr": 2,
+      "txns_last_7d": 5,
+      "avg_amount_last_7d": 80.0
+    },
+    "device_fingerprint": {
+      "device_id": "device001",
+      "ip": "192.168.1.10",
+      "user_agent": "Mozilla/5.0",
+      "geo": "New York, NY"
+    }
+  },
+  {
+    "transaction_id": "TXN100002",
+    "amount": 500.00,
+    "merchant": {
+      "chargeback_rate": 0.05,
+      "fraud_rate": 0.03,
+      "avg_ticket": 250.00,
+      "merchant_risk_level": "MEDIUM"
+    },
+    "cardholder_profile": {
+      "avg_spend": 1200,
+      "home_zip": "90210",
+      "distance_from_home": 40.0,
+      "recent_travel": true,
+      "account_age_days": 1500
+    },
+    "velocity_metrics": {
+      "txns_last_1hr": 1,
+      "txns_last_24hr": 3,
+      "txns_last_7d": 8,
+      "avg_amount_last_7d": 400.0
+    },
+    "device_fingerprint": {
+      "device_id": "device002",
+      "ip": "10.0.0.2",
+      "user_agent": "Mozilla/5.0 (iPhone)",
+      "geo": "Los Angeles, CA"
+    }
+  },
+  {
+    "transaction_id": "TXN100003",
+    "amount": 75.25,
+    "merchant": {
+      "chargeback_rate": 0.01,
+      "fraud_rate": 0.005,
+      "avg_ticket": 50.00,
+      "merchant_risk_level": "LOW"
+    },
+    "cardholder_profile": {
+      "avg_spend": 500,
+      "home_zip": "60601",
+      "distance_from_home": 5.0,
+      "recent_travel": false,
+      "account_age_days": 1200
+    },
+    "velocity_metrics": {
+      "txns_last_1hr": 0,
+      "txns_last_24hr": 1,
+      "txns_last_7d": 4,
+      "avg_amount_last_7d": 70.0
+    },
+    "device_fingerprint": {
+      "device_id": "device003",
+      "ip": "172.16.0.3",
+      "user_agent": "Mozilla/5.0 (Android)",
+      "geo": "Chicago, IL"
+    }
+  },
+  {
+    "transaction_id": "TXN100004",
+    "amount": 2500.00,
+    "merchant": {
+      "chargeback_rate": 0.08,
+      "fraud_rate": 0.05,
+      "avg_ticket": 1500.00,
+      "merchant_risk_level": "HIGH"
+    },
+    "cardholder_profile": {
+      "avg_spend": 5000,
+      "home_zip": "94105",
+      "distance_from_home": 120.0,
+      "recent_travel": true,
+      "account_age_days": 3000
+    },
+    "velocity_metrics": {
+      "txns_last_1hr": 2,
+      "txns_last_24hr": 4,
+      "txns_last_7d": 10,
+      "avg_amount_last_7d": 2000.0
+    },
+    "device_fingerprint": {
+      "device_id": "device004",
+      "ip": "192.168.0.4",
+      "user_agent": "Mozilla/5.0",
+      "geo": "San Francisco, CA"
+    }
+  },
+  {
+    "transaction_id": "TXN100005",
+    "amount": 35.00,
+    "merchant": {
+      "chargeback_rate": 0.0,
+      "fraud_rate": 0.0,
+      "avg_ticket": 20.00,
+      "merchant_risk_level": "LOW"
+    },
+    "cardholder_profile": {
+      "avg_spend": 200,
+      "home_zip": "30301",
+      "distance_from_home": 1.0,
+      "recent_travel": false,
+      "account_age_days": 600
+    },
+    "velocity_metrics": {
+      "txns_last_1hr": 0,
+      "txns_last_24hr": 1,
+      "txns_last_7d": 2,
+      "avg_amount_last_7d": 30.0
+    },
+    "device_fingerprint": {
+      "device_id": "device005",
+      "ip": "10.0.0.5",
+      "user_agent": "Mozilla/5.0",
+      "geo": "Atlanta, GA"
+    }
+  }
+]
