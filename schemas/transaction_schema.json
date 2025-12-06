@@ -1,0 +1,32 @@
+{
+  "transaction_id": "TXN123456",
+  "amount": 249.99,
+  "merchant": "Acme Electronics",
+  "mcc": "5734",
+  "merchant_history": {
+    "chargeback_rate": 0.12,
+    "fraud_rate": 0.03,
+    "avg_ticket": 180.00,
+    "merchant_risk_level": "MEDIUM"
+  },
+  "cardholder_profile": {
+    "avg_spend": 850,
+    "home_zip": "10001",
+    "distance_from_home": 2.3,
+    "recent_travel": false,
+    "account_age_days": 342
+  },
+  "velocity_metrics": {
+    "txns_last_1hr": 3,
+    "txns_last_24hr": 7,
+    "txns_last_7d": 19,
+    "avg_amount_last_7d": 220.45
+  },
+  "device_fingerprint": {
+    "device_id": "dvc-99881",
+    "ip": "172.16.2.50",
+    "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_2)",
+    "geo": "New York, NY"
+  }
+}
+
