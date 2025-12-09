@@ -1,100 +1,120 @@
+export interface Env {
+  GROQ_API_KEY: string;
+  MODEL_NAME: string;
+}
+
+function corsHeaders(origin: string | null) {
+  return {
+    "Access-Control-Allow-Origin": origin || "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
+
 export default {
-  async fetch(request: Request, env: any, ctx: ExecutionContext): Promise<Response> {
-    // CORS preflight
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const origin = request.headers.get("Origin");
+
     if (request.method === "OPTIONS") {
       return new Response(null, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type"
-        }
+        status: 204,
+        headers: corsHeaders(origin),
       });
     }
 
     if (request.method !== "POST") {
-      return new Response(JSON.stringify({ error: "POST only" }), {
+      return new Response(JSON.stringify({ error: "Use POST only" }), {
         status: 405,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
-        }
+        headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
       });
     }
 
+    let body;
     try {
-      const body = await request.json();
+      body = await request.json();
+    } catch {
+      return new Response(JSON.stringify({ error: "Invalid JSON" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+      });
+    }
 
-      if (!body || !body.transaction) {
-        return new Response(JSON.stringify({ error: "Missing transaction payload" }), {
-          status: 400,
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
-          }
-        });
-      }
+    const transaction = body.transaction;
+    if (!transaction || typeof transaction !== "object") {
+      return new Response(JSON.stringify({ error: "Missing 'transaction' object" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+      });
+    }
 
-      const completion = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    const prompt = `
+You are an AI financial fraud detection engine. Analyze the following transaction and respond ONLY with valid JSON.
+
+Transaction:
+${JSON.stringify(transaction, null, 2)}
+
+Respond with exactly:
+{
+  "risk_score": <0-100>,
+  "reason": "<short explanation>",
+  "signals": ["signal1", "signal2"]
+}
+`;
+
+    const groqRes = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
         method: "POST",
         headers: {
+          "Authorization": `Bearer ${env.GROQ_API_KEY}`,
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${env.GROQ_API_KEY}`
         },
         body: JSON.stringify({
-          model: "openai/gpt-oss-20b",
-          messages: [
-            {
-              role: "system",
-              content: "You are a transaction risk scoring model. Return ONLY valid JSON: {\"risk_score\": number, \"reason\": string, \"signals\": []}"
-            },
-            {
-              role: "user",
-              content: "Score this transaction: " + JSON.stringify(body.transaction)
-            }
-          ]
-        })
-      });
-
-      if (!completion.ok) {
-        const detail = await completion.text();
-        return new Response(
-          JSON.stringify({
-            error: "Groq API error",
-            status: completion.status,
-            detail
-          }),
-          {
-            status: 500,
-            headers: {
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*"
-            }
-          }
-        );
-      }
-
-      const groqResponse = await completion.json();
-
-      return new Response(JSON.stringify(groqResponse), {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
-        }
-      });
-    } catch (err: any) {
-      return new Response(
-        JSON.stringify({
-          error: "Worker crashed",
-          detail: err.message
+          model: env.MODEL_NAME,
+          messages: [{ role: "user", content: prompt }],
+          temperature: 0.1,
         }),
-        {
-          status: 500,
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
-          }
-        }
-      );
+      }
+    );
+
+    if (!groqRes.ok) {
+      const text = await groqRes.text();
+      return new Response(JSON.stringify({ error: "Groq error", details: text }), {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+      });
     }
-  }
+
+    const data = await groqRes.json();
+    const content = data?.choices?.[0]?.message?.content ?? "";
+
+    const cleaned = content
+      .replace(/```json/gi, "")
+      .replace(/```/g, "")
+      .trim();
+
+    let parsed;
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch {
+      parsed = {
+        risk_score: 50,
+        reason: "Model returned invalid JSON.",
+        signals: [],
+        raw: cleaned,
+      };
+    }
+
+    const responsePayload = {
+      ...parsed,
+      model: env.MODEL_NAME,
+      backend: "groq",
+      timestamp: new Date().toISOString(),
+    };
+
+    return new Response(JSON.stringify(responsePayload), {
+      status: 200,
+      headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+    });
+  },
 };

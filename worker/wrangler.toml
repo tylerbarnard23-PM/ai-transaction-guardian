@@ -2,16 +2,5 @@ name = "transaction-guardian-worker"
 main = "src/index.ts"
 compatibility_date = "2024-09-01"
 
-# Recommended for fetch(), crypto, etc
-compatibility_flags = ["nodejs_compat"]
-
 [vars]
-MODEL_NAME = "openai/gpt-oss-20b"
-
-# ---- Production environment ----
-[env.production]
-# (NO name here — Cloudflare forbids this)
-# (NO main here — Cloudflare forbids this)
-
-[env.production.vars]
-MODEL_NAME = "openai/gpt-oss-20b"
+MODEL_NAME = "llama3-8b-8192"
