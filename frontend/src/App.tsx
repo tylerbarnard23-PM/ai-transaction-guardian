@@ -81,9 +81,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-100 pb-20 lg:pb-0">
-      <div className="mx-auto flex min-h-screen max-w-6xl lg:px-6">
+      <div className="mx-auto flex min-h-screen max-w-6xl lg:px-8">
         {/* DESKTOP SIDEBAR */}
-        <aside className="hidden w-64 flex-col border-r border-slate-200 bg-white/95 px-5 py-6 shadow-sm lg:flex">
+        <aside className="hidden w-56 flex-col border-r border-slate-200 bg-white/95 px-5 py-6 shadow-sm lg:flex">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-700">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -142,7 +142,7 @@ export default function App() {
           </header>
 
           {/* MAIN CONTENT */}
-          <main className="mt-4 flex-1 px-3 pb-6 lg:mt-8 lg:px-0 lg:pb-10">
+          <main className="mt-4 flex-1 px-3 pb-6 lg:mt-8 lg:pl-8 lg:pr-0 lg:pb-10">
             <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-6">
               {/* TRANSACTION FORM */}
               <section>
