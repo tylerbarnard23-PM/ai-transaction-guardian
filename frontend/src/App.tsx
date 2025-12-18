@@ -121,7 +121,7 @@ export default function App() {
           </div>
 
           <div className="mt-auto pt-6 text-[11px] text-slate-400">
-            <p>Built as a product demo for fraud & risk PM roles.</p>
+            <p>Product demo for AI-powered transaction risk analysis.</p>
           </div>
         </aside>
 
