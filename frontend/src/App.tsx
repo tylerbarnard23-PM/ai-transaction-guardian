@@ -108,17 +108,16 @@ export default function App() {
             </div>
 
             <div>
-              <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">
-                Model
-              </p>
-              <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700">
-                LLM risk engine
-                <span className="ml-1 text-[11px] text-slate-400">
-                  (serverless)
-                </span>
-              </div>
-            </div>
-          </div>
+  <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">
+    Model
+  </p>
+  <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700">
+    {result ? result.model : "LLM risk engine"}
+    <span className="ml-1 text-[11px] text-slate-400">
+      ({result ? result.backend : "serverless"})
+    </span>
+  </div>
+</div>
 
           <div className="mt-auto pt-6 text-[11px] text-slate-400">
             <p>Product demo for AI-powered transaction risk analysis.</p>
