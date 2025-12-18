@@ -53,7 +53,7 @@ export default function App() {
 
       if (!response.ok) throw new Error("API error");
 
-      const data = await response.json();
+      const data = (await response.json()) as RiskResult;
       setResult(data);
 
       // MOBILE: open slide-up panel and switch nav tab
@@ -108,16 +108,17 @@ export default function App() {
             </div>
 
             <div>
-  <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">
-    Model
-  </p>
-  <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700">
-    {result ? result.model : "LLM risk engine"}
-    <span className="ml-1 text-[11px] text-slate-400">
-      ({result ? result.backend : "serverless"})
-    </span>
-  </div>
-</div>
+              <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">
+                Model
+              </p>
+              <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700">
+                {result?.model ?? "LLM risk engine"}
+                <span className="ml-1 text-[11px] text-slate-400">
+                  ({result?.backend ?? "serverless"})
+                </span>
+              </div>
+            </div>
+          </div>
 
           <div className="mt-auto pt-6 text-[11px] text-slate-400">
             <p>Product demo for AI-powered transaction risk analysis.</p>
@@ -214,6 +215,7 @@ export default function App() {
                           setResult(null);
                           setError(null);
                           setPanelOpen(false);
+                          setActive("home");
                         }}
                         className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50"
                       >
@@ -368,23 +370,16 @@ export default function App() {
       <SlideUpPanel open={panelOpen} onClose={() => setPanelOpen(false)}>
         {result ? (
           <>
-            <h2 className="text-lg font-semibold text-slate-900">
-              Risk result
-            </h2>
+            <h2 className="text-lg font-semibold text-slate-900">Risk result</h2>
             <p className="mt-1 text-sm text-slate-600">
               {result.risk_score} / 100 · {riskLabel(result.risk_score)}
             </p>
 
             <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
               <div
-                className={`h-full rounded-full ${riskColor(
-                  result.risk_score
-                )}`}
+                className={`h-full rounded-full ${riskColor(result.risk_score)}`}
                 style={{
-                  width: `${Math.min(
-                    100,
-                    Math.max(0, result.risk_score)
-                  )}%`,
+                  width: `${Math.min(100, Math.max(0, result.risk_score))}%`,
                 }}
               />
             </div>
