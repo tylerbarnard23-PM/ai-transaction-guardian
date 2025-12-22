@@ -1,135 +1,141 @@
-# AI Fraud Analyzer — LLM-Powered Transaction Risk Scoring
+🚀 Product Overview
 
-An end-to-end AI product demonstration project showcasing my ability to deliver **AI-driven product strategy**, **LLM architecture**, and **technical execution workflows** as a Product Manager.
+Financial institutions evaluate transactions using a mix of rules, models, and human review. These systems often struggle with:
 
-This project implements a real-world banking use case:  
-**Using structured transaction data + LLM reasoning to detect anomalous or fraudulent payment behavior.**
+Limited explainability
 
----
+High operational complexity
 
-## 🚀 Product Overview
+Slow iteration cycles
 
-Modern fraud detection relies on a mix of rules engines, machine learning, velocity checks, and human review. These systems are often:
+Poor analyst UX
 
-- Rigid  
-- Hard to maintain  
-- Unable to explain *why* a transaction looks suspicious  
+Transaction Guardian explores how LLMs can augment traditional risk workflows by producing structured, explainable, deterministic outputs—while remaining easy to integrate and reason about.
 
-This prototype solves that by using:
+This is not a startup pitch or a production system.
+It is a hands-on demonstration of how an AI feature could be designed, implemented, and communicated in a real enterprise environment.
 
-### ✔ A structured JSON schema (my own design)  
-### ✔ An LLM that reasons over the schema  
-### ✔ Deterministic, explainable outputs  
-### ✔ A risk-scoring API  
-### ✔ A simple analyst-facing interface  
+🧠 What the Demo Does
 
-This project demonstrates how I would lead the development of a **real AI feature** from concept → architecture → working technical artifacts.
+The application allows a user to submit a simulated transaction and receive:
 
----
+A normalized risk score
 
-## 🧩 Core Components
+A clear risk verdict (e.g., Low / Medium / High Risk)
 
-### 1. Transaction Schema (`/schemas`)  
-A normalized JSON structure representing a single card transaction.  
-This schema covers:  
-- Merchant risk profile  
-- Cardholder behavioral baseline  
-- Velocity metrics  
-- Device fingerprinting  
+A plain-English explanation
 
-This provides a deterministic contract for LLM inputs — a critical requirement in production AI.
+A list of risk signals
 
----
+Model metadata (model + backend)
 
-### 2. Code-Generated Types (`/generated`)  
-Using **quicktype**, I generated strongly typed models (TS / Python / C#):  
-- Ensures consistency  
-- Catches errors  
-- Makes downstream API development easier  
+A timestamped decision record
 
-This mirrors real-world AI team workflows where PMs define drafts → engineers auto-generate models.
+All results are returned as structured JSON and rendered in a premium, analyst-style UI.
 
----
+🧩 Core System Components
+1. Frontend Experience (React)
 
-### 3. LLM Scoring API (`/api`) *(coming next)*  
-A lightweight backend service that:  
-1. Accepts the JSON schema  
-2. Prompts an LLM with structured instructions  
-3. Outputs a normalized risk score (0–1)  
-4. Provides an explanation + recommended action  
+Responsive web application with distinct desktop and mobile experiences
 
-This is a common pattern in AI integrations.
+Fintech-style UI designed for clarity and trust
 
----
+Real-time request/response flow
 
-### 4. Analyst Notebook (`/notebooks`) *(coming next)*  
-A short demo notebook that:  
-- Loads example transactions  
-- Calls the scoring API  
-- Visualizes fraud risk outputs  
+Structured rendering of model outputs (score, verdict, explanation, signals)
 
-This gives a visual demo for business impact.
+This demonstrates user-centric product thinking—not just API wiring.
 
----
+2. LLM Risk Engine (Cloudflare Worker)
 
-### 5. UI Mock (`/ui`) *(coming next)*  
-A simple interface concept for fraud analysts showing:  
-- Incoming transaction  
-- Risk score  
-- Model explanation  
-- Suggested action  
+Lightweight serverless backend deployed on Cloudflare Workers
 
-Shows PM-level user experience thinking.
+Accepts structured transaction inputs
 
----
+Prompts an LLM with deterministic instructions
 
-## 🧱 System Architecture (High-Level)
+Returns a normalized, schema-safe response
 
-**Flow:**  
-Raw Transaction → Schema Validation → LLM Risk Engine → Score + Explanation → Downstream Action
+Model details (live):
 
-**Key Layers:**  
-- **Input normalization**  
-- **LLM prompt + schema**  
-- **Evaluation + scoring logic**  
-- **Observability & output logging**  
-- **Future ML model integration**  
+Model: llama-3.1-8b-instant
 
-(See diagrams in `/architecture` or project wiki.)
+Backend: Groq
 
----
+Inference: Stateless, on-demand, no fine-tuning
 
-## 🔍 Why This Matters for AI Product Management
+The focus is on integration quality, safety, and explainability, not model training.
 
-This project demonstrates the PM skills essential for real AI delivery:
+3. End-to-End API Contract
 
-### ✔ Data schema design  
-### ✔ LLM prompt design + output structure  
-### ✔ API definition  
-### ✔ Evaluation frameworks  
-### ✔ Risk + safety considerations  
-### ✔ Cross-functional technical workflows  
-### ✔ Roadmapping and future extensions  
+The system enforces a clean contract between frontend and backend:
 
----
+Explicit input structure
 
-## 🛣️ Roadmap
+Predictable output schema
 
-**v1 Complete:**  
-- Schema  
-- Code generation  
-- Initial architecture  
-- Repository structure  
+Defensive JSON parsing
 
-**v2 (Next Up):**  
-- Risk scoring API  
-- Demo notebook  
-- Example transactions  
+Clear error handling
 
-**v3:**  
-- UI mock  
-- Logging + analytics  
-- Weighted hybrid scoring (LLM + rules + ML)  
+This mirrors how AI features are built inside regulated environments like fintech.
 
-**v4:**  
-- Deployment to a simple cloud environment  
+🧱 High-Level Architecture
+
+Flow:
+
+Transaction Input
+→ API Request
+→ LLM Risk Evaluation
+→ Structured Risk Decision
+→ Analyst-Facing UI
+
+Key Design Principles:
+
+Deterministic outputs over free-form text
+
+Explainability by default
+
+Minimal surface area for failure
+
+Production-style separation of concerns
+
+🔍 Why This Project Matters
+
+This demo showcases how I work as a Product Manager in AI-driven domains:
+
+Translating ambiguous problems into concrete product flows
+
+Designing structured inputs and outputs for LLMs
+
+Making AI decisions understandable to humans
+
+Balancing speed, safety, and clarity
+
+Shipping polished demos that stakeholders can actually use
+
+It reflects AI product leadership + hands-on execution, not theory.
+
+🛣️ Potential Future Extensions (Optional)
+
+If this were extended further, logical next steps could include:
+
+Rules + heuristic overlays alongside LLM reasoning
+
+Human-in-the-loop review workflows
+
+Telemetry and decision analytics
+
+Policy and compliance signal integration
+
+Side-by-side model comparisons
+
+These are intentionally not implemented to keep the demo focused and credible.
+
+📌 Notes
+
+This project is for demonstration and learning purposes only
+
+No real transaction data is used
+
+No production claims are implied
