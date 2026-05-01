@@ -1,4 +1,5 @@
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
+const GA_MEASUREMENT_ID =
+  import.meta.env.VITE_GA_MEASUREMENT_ID || "G-5WF4K8N2EE";
 
 declare global {
   interface Window {
@@ -31,6 +32,7 @@ export function initGoogleAnalytics() {
   window.gtag("js", new Date());
   window.gtag("config", GA_MEASUREMENT_ID, {
     page_path: window.location.pathname,
+    page_title: document.title,
   });
 }
 
