@@ -80,6 +80,29 @@ Clear error handling
 
 This mirrors how AI features are built inside regulated environments like fintech.
 
+📈 Google Analytics
+
+The frontend includes a small Google Analytics 4 integration that is disabled unless a measurement ID is provided.
+
+1. Create a GA4 web data stream in Google Analytics.
+2. Copy the Measurement ID. It should look like `G-XXXXXXXXXX`.
+3. Add the ID to your frontend environment as:
+
+```bash
+VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+For local testing, create `frontend/.env.local` and add the value there. For GitHub Pages deployment, add `VITE_GA_MEASUREMENT_ID` as a GitHub Actions repository variable.
+
+Tracked events:
+
+- `score_transaction_started`
+- `score_transaction_completed`
+- `score_transaction_failed`
+- `demo_transaction_selected`
+- `transaction_form_reset`
+- `risk_result_panel_closed`
+
 🧱 High-Level Architecture
 
 Flow:
