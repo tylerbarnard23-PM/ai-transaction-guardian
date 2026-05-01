@@ -2,6 +2,7 @@ import { useState } from "react";
 import type React from "react";
 import MobileNav from "./components/MobileNav";
 import SlideUpPanel from "./components/SlideUpPanel";
+import { trackEvent } from "./lib/analytics";
 
 interface Transaction {
   amount: string;
@@ -40,6 +41,10 @@ export default function App() {
     setLoading(true);
     setResult(null);
     setError(null);
+    trackEvent("score_transaction_started", {
+      has_amount: Boolean(transaction.amount),
+      has_merchant: Boolean(transaction.merchant),
+    });
 
     try {
       const response = await fetch(
@@ -55,6 +60,10 @@ export default function App() {
 
       const data = (await response.json()) as RiskResult;
       setResult(data);
+      trackEvent("score_transaction_completed", {
+        risk_score: data.risk_score,
+        verdict: data.verdict,
+      });
 
       // MOBILE: open slide-up panel and switch nav tab
       setPanelOpen(true);
@@ -62,6 +71,7 @@ export default function App() {
     } catch (err) {
       console.error(err);
       setError("Something went wrong. Please try again.");
+      trackEvent("score_transaction_failed");
     } finally {
       setLoading(false);
     }
@@ -216,6 +226,7 @@ export default function App() {
                           setError(null);
                           setPanelOpen(false);
                           setActive("home");
+                          trackEvent("transaction_form_reset");
                         }}
                         className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50"
                       >
@@ -227,25 +238,31 @@ export default function App() {
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <button
                         type="button"
-                        onClick={() =>
+                        onClick={() => {
                           setTransaction({
                             amount: "24.99",
                             merchant: "Streaming Service Subscription",
-                          })
-                        }
+                          });
+                          trackEvent("demo_transaction_selected", {
+                            demo_type: "low_risk",
+                          });
+                        }}
                         className="rounded-lg border border-slate-200 bg-slate-50 py-2 text-[12px] text-slate-700 hover:border-emerald-200 hover:bg-emerald-50"
                       >
                         Low-risk demo
                       </button>
                       <button
                         type="button"
-                        onClick={() =>
+                        onClick={() => {
                           setTransaction({
                             amount: "950.00",
                             merchant:
                               "Urgent wire to unknown international crypto broker",
-                          })
-                        }
+                          });
+                          trackEvent("demo_transaction_selected", {
+                            demo_type: "high_risk",
+                          });
+                        }}
                         className="rounded-lg border border-slate-200 bg-slate-50 py-2 text-[12px] text-slate-700 hover:border-rose-200 hover:bg-rose-50"
                       >
                         High-risk demo
@@ -389,7 +406,10 @@ export default function App() {
             </p>
 
             <button
-              onClick={() => setPanelOpen(false)}
+              onClick={() => {
+                setPanelOpen(false);
+                trackEvent("risk_result_panel_closed");
+              }}
               className="mt-5 w-full rounded-lg bg-slate-900 py-2.5 text-sm font-medium text-slate-50"
             >
               Close
