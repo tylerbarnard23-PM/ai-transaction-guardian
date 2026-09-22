@@ -10,7 +10,7 @@ Slow iteration cycles
 
 Poor analyst UX
 
-Transaction Guardian explores how LLMs can augment traditional risk workflows by producing structured, explainable, deterministic outputs—while remaining easy to integrate and reason about.
+Transaction Guardian explores how LLMs can augment traditional risk workflows by producing structured, explainable outputs—while remaining easy to integrate and reason about.
 
 This is not a startup pitch or a production system.
 It is a hands-on demonstration of how an AI feature could be designed, implemented, and communicated in a real enterprise environment.
@@ -58,13 +58,25 @@ Returns a normalized, schema-safe response
 
 Model details (live):
 
-Model: llama-3.1-8b-instant
+Model: openai/gpt-oss-20b
 
 Backend: Groq
 
-Inference: Stateless, on-demand, no fine-tuning
+Inference: Stateless, on-demand
 
-The focus is on integration quality, safety, and explainability, not model training.
+Training for this use case: None
+
+Important model-scope note:
+
+The model used in this demo is a general-purpose LLM. It has **not** been trained, fine-tuned, calibrated, or validated on fraud, payments-risk, bank, card-network, or financial-crime datasets for this project.
+
+That is intentional.
+
+The purpose of Transaction Guardian is not to claim that a general-purpose LLM can replace a production fraud model. The demo is designed to show how a product team could wire an LLM into a transaction-risk experience: passing structured transaction data to a serverless backend, applying a controlled prompt, requesting a predictable JSON contract, normalizing the response, and presenting the result in an analyst-facing product experience.
+
+In a production implementation, the LLM could sit alongside established fraud controls such as rules engines, behavioral models, device intelligence, consortium data, velocity checks, authentication signals, and human review. A production risk model would require appropriate training data, testing, calibration, monitoring, governance, and compliance controls.
+
+The focus of this project is therefore **LLM product integration, UX, explainability, and system design—not fraud-model performance or model training.**
 
 3. End-to-End API Contract
 
@@ -115,7 +127,7 @@ Transaction Input
 
 Key Design Principles:
 
-Deterministic outputs over free-form text
+Structured, constrained outputs over free-form text
 
 Explainability by default
 
