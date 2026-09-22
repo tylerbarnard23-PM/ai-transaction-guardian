@@ -48,7 +48,7 @@ export default function App() {
 
     try {
       const response = await fetch(
-        "https://transaction-guardian-worker-production.tylerbarnard23.workers.dev",
+        "https://transaction-guardian-worker.tylerbarnard23.workers.dev",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
