@@ -151,7 +151,7 @@ Shipping polished demos that stakeholders can actually use
 
 It reflects AI product leadership + hands-on execution, not theory.
 
-🛣️ Potential Future Extensions (Optional)
+🛣️ Potential Future Extensions 
 
 If this were extended further, logical next steps could include:
 
